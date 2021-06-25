@@ -41,6 +41,8 @@ export default class MainMap extends BaseMap<MainMapProps> {
         addAuxiliaryLine(this.ctx, ItemGridSize);
       }
       if (this.props.mapData) {
+        this.labelQueue = [];
+
         this.props.mapData.forEach((ele, index) => {
           let lastSpace = null;
 

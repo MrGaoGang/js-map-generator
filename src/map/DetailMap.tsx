@@ -24,12 +24,9 @@ export type DetailMapProps = Partial<MapItemInfoType> &
 let ItemGridSize = 10;
 
 export default class DetailMap extends BaseMap<DetailMapProps> {
-
-
   constructor(props: DetailMapProps) {
     super(props);
   }
-
 
   clearGrid() {
     for (let x = 0; x < this.numXs; x++) {
@@ -51,15 +48,9 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
     }
   }
 
-
-
   componentWillUpdate(newProps: DetailMapProps) {
-    if (
-      newProps.positions !== this.props.positions ||
-      newProps.color !== this.props.color
-    ) {
+    if (newProps !== this.props ) {
       ItemGridSize = newProps.gridSize || 10;
-
       this.updateMap(newProps);
       this.clearGrid();
       this.draw();
@@ -91,6 +82,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       showType === "random-fill" ||
       showType === "average-vertical"
     ) {
+      this.labelQueue = [];
       // 开始填充
       (props.datas || []).forEach((ele, index) => {
         const filler = new Filler(ele.value, ele.name, this.numXs, this.numYs);
@@ -125,8 +117,6 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       });
     }
   }
-
- 
 
   doDidMounted() {
     if (this.ctx) {

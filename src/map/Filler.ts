@@ -58,6 +58,7 @@ export class Filler {
 
   getCenterMap() {
     const info = this.getMapInfo();
+    
     const sumX = info.x.reduce((pre, current) => {
       return pre + current;
     }, 0);

@@ -106,10 +106,10 @@ import { MainMap } from "js-map-generator";
   mapHeight: number; // 地图高度
   gridSize: number; // 网格宽高
   mapColorRandom?: boolean; // 是否随机生成地图颜色
-  showLine?: boolean; // 是否显示辅助线
+  showLine?: boolean; // 是否显示辅助线;暂不支持动态
 
   // 标签相关
-  showLabel?: boolean; // 是否展示地图标签
+  showLabel?: boolean; // 是否展示地图标签;暂不支持动态
   label?: {
     // 标签信息
     color: string; // 标签颜色

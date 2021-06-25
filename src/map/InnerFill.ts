@@ -8,11 +8,12 @@ export class InnerFiller extends Filler {
     super(value, name, xCount, yCount);
   }
 
-  // 一般是最后一个进行填充剩余的
+  // 一般是最后一个进行填充剩余的,但是使用此种方式找中心点还存在一定的问题，需要找到最大的连续部分
   fillReaming(dataMap: DataMapType) {
     for (let x = 0; x < this.xCount; x++) {
       for (let y = 0; y < this.yCount; y++) {
         if (dataMap[x][y].value === 0) {
+          this.frontiers[`${x}:${y}`] = true;
           this.changeMapItem(dataMap, x, y);
         }
       }
@@ -25,6 +26,7 @@ export class InnerFiller extends Filler {
       for (let y = 0; y < this.yCount; y++) {
         for (let x = 0; x < this.xCount; x++) {
           if (dataMap[x][y].value === 0 && count <= this.value) {
+            this.frontiers[`${x}:${y}`] = true;
             this.changeMapItem(dataMap, x, y);
             count++;
           }
@@ -34,6 +36,7 @@ export class InnerFiller extends Filler {
       for (let x = 0; x < this.xCount; x++) {
         for (let y = 0; y < this.yCount; y++) {
           if (dataMap[x][y].value === 0 && count <= this.value) {
+            this.frontiers[`${x}:${y}`] = true;
             this.changeMapItem(dataMap, x, y);
             count++;
           }

@@ -66,6 +66,7 @@ export default class BaseMap<T> extends Component<
 
   drawLabel = (info: MapItemInfoType) => {
     const { center, name, textColor } = info;
+    
     const { label } = this.props;
     if (this.ctx) {
       if (label) {
