@@ -4,7 +4,7 @@
   "description": "按照一定的比例随机生成地图和子地图",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf ./lib && npx webpack"
   },
   "repository": {
     "type": "git",

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Point, MapItem } from "./Map";
 import { InnerFiller as Filler } from "./InnerFill";
 import { addAuxiliaryLine, getEventPosition } from "./utils";
+import BaseMap from "./BaseMap";
 
 const getRandomColor = function () {
   var hex = Math.floor(Math.random() * 16777216).toString(16); //生成ffffff以内16进制数
@@ -15,39 +16,20 @@ const getRandomColor = function () {
 export type DetailMapProps = Partial<MapItemInfoType> &
   Partial<{
     showType: "parent" | "average" | "average-vertical" | "random-fill";
-    showLine: boolean;
+    callback?: (info: MapItemInfoType) => void;
   }> & {
     datas: ItemMapData[];
   } & Partial<BaseProps>;
 
 let ItemGridSize = 10;
 
-export default class DetailMap extends Component<DetailMapProps> {
-  canvasRef: React.RefObject<HTMLCanvasElement>;
-  numXs: number;
-  numYs: number;
-  dataMap: DataMapType;
-  ctx: CanvasRenderingContext2D | null;
-  labelQueue: MapItemInfoType[];
+export default class DetailMap extends BaseMap<DetailMapProps> {
+
 
   constructor(props: DetailMapProps) {
     super(props);
-    this.canvasRef = React.createRef();
-    this.ctx = null;
-    this.numXs = 0;
-    this.numYs = 0;
-    this.dataMap = [];
-    this.labelQueue = [];
   }
 
-  drawGridTile(x: number, y: number, color?: string) {
-    const xPos = x * ItemGridSize;
-    const yPos = y * ItemGridSize;
-    if (this.ctx) {
-      this.ctx.fillStyle = color || "transparent";
-      this.ctx.fillRect(xPos, yPos, ItemGridSize, ItemGridSize);
-    }
-  }
 
   clearGrid() {
     for (let x = 0; x < this.numXs; x++) {
@@ -69,66 +51,7 @@ export default class DetailMap extends Component<DetailMapProps> {
     }
   }
 
-  draw = () => {
-    // 绘制网格
-    for (let x = 0; x < this.numXs; x++) {
-      for (let y = 0; y < this.numYs; y++) {
-        const mapItem = this.dataMap[x][y];
-        if (mapItem && mapItem.value !== -1) {
-          this.drawGridTile(x, y, mapItem.color);
-        }
-      }
-    }
-    // 绘制文字
-    for (let i = 0; i < this.labelQueue.length; i++) {
-      const item = this.labelQueue[i];
-      this.drawLabel(item);
-    }
-  };
 
-  drawLabel = (info: MapItemInfoType) => {
-    const { center, name, color } = info;
-    if (this.ctx) {
-      this.ctx.fillStyle = color || "black";
-      this.ctx.font = "20px bold";
-    }
-
-    // @ts-ignore
-    this.ctx.fillTextVertical(
-      name,
-      center.x * ItemGridSize,
-      center.y * ItemGridSize
-    );
-  };
-
-  initDataMap = () => {
-    if (this.ctx) {
-      const ctx = this.ctx;
-      const { positions = {}, color = "transparent" } = this.props;
-      const canvasWidth = ctx.canvas.width;
-      const canvasHeight = ctx.canvas.height;
-      var xLineTotals = Math.floor(canvasHeight / ItemGridSize); // 计算需要绘画的x轴条数
-      var yLineTotals = Math.floor(canvasWidth / ItemGridSize); // 计算需要绘画y轴的条数
-      this.numYs = xLineTotals;
-      this.numXs = yLineTotals;
-
-      // 构建数据二维地图
-      for (let i = 0; i < this.numXs; i++) {
-        const tmp: {
-          value: number;
-          name: string;
-          color?: string;
-        }[] = [];
-        for (let j = 0; j < this.numYs; j++) {
-          if (positions[`${i}:${j}`]) {
-            tmp.push({ color, value: 1, name: "" });
-          }
-          tmp.push({ color: "transparent", value: -1, name: "" });
-        }
-        this.dataMap.push(tmp);
-      }
-    }
-  };
 
   componentWillUpdate(newProps: DetailMapProps) {
     if (
@@ -188,46 +111,35 @@ export default class DetailMap extends Component<DetailMapProps> {
             );
           }
         }
+
+        this.labelQueue.push({
+          center: filler.getCenterMap(),
+          name: filler.name,
+          id: filler.name, // 后面换成真实的id
+          color: filler.color,
+          positions: filler.frontiers,
+          index: index,
+          textColor: ele.textColor || "",
+          datas: ele.children || [],
+        });
       });
     }
   }
 
-  getEventInWhereMap(position: PointType) {
-    for (let i = 0; i < this.labelQueue.length; i++) {
-      const ele = this.labelQueue[i];
-      if (ele.positions[`${position.x}:${position.y}`]) {
-        return ele.id;
-      }
-    }
+ 
 
-    return "";
-  }
-
-  registerListener = () => {
-    this.canvasRef.current?.addEventListener("click", (event) => {
-      const p = getEventPosition(event);
-      // 转换为数据地图中的坐标
-      const mapPosition = {
-        x: Math.floor(p.x / ItemGridSize),
-        y: Math.floor(p.y / ItemGridSize),
-      };
-    });
-  };
-  componentDidMount() {
-    const canvas = this.canvasRef.current;
-    const { showLine, gridSize = 10 } = this.props;
-    const ctx = canvas?.getContext("2d");
-    ItemGridSize = gridSize;
-    if (ctx) {
-      this.ctx = ctx;
-      this.initDataMap();
+  doDidMounted() {
+    if (this.ctx) {
+      const { showLine, gridSize = 10 } = this.props;
+      ItemGridSize = gridSize;
+      this.initDataMap(this.ctx);
       this.registerListener();
       if (showLine) {
-        addAuxiliaryLine(ctx, ItemGridSize);
+        addAuxiliaryLine(this.ctx, ItemGridSize);
       }
     }
   }
-  render() {
+  doRender() {
     const { mapWidth = 1000, mapHeight = 500 } = this.props;
     return <canvas ref={this.canvasRef} width={mapWidth} height={mapHeight} />;
   }

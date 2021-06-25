@@ -93,14 +93,28 @@ import { MainMap } from "map-generator";
 {
     mapData: ItemMapData[]; // 数据源
   callback?: (info: MapItemInfoType) => void; // 地图点击事件回调
-   mapWidth: number; // 地图的宽度 
-  mapHeight: number; // 地图的高度
-  gridSize: number; //每个格子的宽高
-  mapColorRandom?: boolean; //是否随机生成颜色
+
+ // 地图相关
+  mapWidth: number; // 地图宽度
+  mapHeight: number; // 地图高度
+  gridSize: number; // 网格宽高
+  mapColorRandom?: boolean; // 是否随机生成地图颜色
+  showLine?: boolean; // 是否显示辅助线
+
+  // 标签相关
+  showLabel?: boolean; // 是否展示地图标签
+  label?: {
+    // 标签信息
+    color: string; // 标签颜色
+    fontSize: number; // 标签字体
+    fontWeight: "bold" | number;
+    fontFamily: string; // 字体
+    labelDirection:'verticel' | 'horizontal' // 标签渲染方向
+  };
+  }
 }
 
 ```
-
 
 ## 子地图
 
@@ -108,24 +122,56 @@ import { MainMap } from "map-generator";
 
 ```js
 import DetailMap from "map-generator";
- 
-   <DetailMap
-          {...selectMapInfo}
-          showLine={true}
-          showType={'random-fill'}
-          datas={selectMapInfo.children || []}
-        />
+
+<DetailMap
+  {...selectMapInfo}
+  showLine={true}
+  showType={"random-fill"}
+  datas={selectMapInfo.datas || []}
+/>;
 ```
 
 ### API(props)
 
 ```js
-Partial<MapItemInfoType> &
-  Partial<{
-    showType: "parent" | "average" | "average-vertical" | "random-fill";
-    showLine: boolean;
-  }> & {
-    datas: ItemMapData[];
-  } & Partial<BaseProps>
+
+{
+  // 数据相关
+  center: PointType; // 地图中心点
+  name: string; // 地图名称
+  id: string; // 地图id
+  color: string; // 地图颜色
+  positions: {
+    // 占用地图的map
+    [key: string]: boolean;
+  };
+  index: number; // 数据层的index
+  textColor: string;
+  datas?: ItemMapData[]; // 子地图的数据
+
+  // 点击事件
+  callback:(info)=>void;
+
+  // 子地图展示类型
+   showType: "parent" | "average" | "average-vertical" | "random-fill"; // 分别代表：只展示父地图，横向按比例展示子地图，总线按比例展示子地图，随机占比展示子地图
+
+  // 地图相关
+  mapWidth: number; // 地图宽度
+  mapHeight: number; // 地图高度
+  gridSize: number; // 网格宽高
+  mapColorRandom?: boolean; // 是否随机生成地图颜色
+  showLine?: boolean; // 是否显示辅助线
+
+  // 标签相关
+  showLabel?: boolean; // 是否展示地图标签
+  label?: {
+    // 标签信息
+    color: string; // 标签颜色
+    fontSize: number; // 标签字体
+    fontWeight: "bold" | number;
+    fontFamily: string; // 字体
+    labelDirection:'verticel' | 'horizontal' // 标签渲染方向
+  };
+  }
 
 ```

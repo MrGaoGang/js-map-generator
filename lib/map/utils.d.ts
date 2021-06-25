@@ -3,4 +3,5 @@ export declare function getEventPosition(ev: any): {
     x: any;
     y: any;
 };
+export declare const getRandomColor: () => string;
 //# sourceMappingURL=utils.d.ts.map
