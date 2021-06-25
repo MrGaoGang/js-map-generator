@@ -1,4 +1,4 @@
-# map-generator
+# js-map-generator
 
 按照一定的比例随机生成地图和子地图;
 
@@ -20,7 +20,7 @@
 
 ```js
 
-npm install map-generator
+npm install js-map-generator
 
 ```
 
@@ -29,7 +29,7 @@ npm install map-generator
 ### 使用
 
 ```js
-import { MainMap } from "map-generator";
+import { MainMap } from "js-map-generator";
 // render部分
 <MainMap
   mapData={realData}
@@ -128,7 +128,7 @@ import { MainMap } from "map-generator";
 ### 使用
 
 ```js
-import DetailMap from "map-generator";
+import DetailMap from "js-map-generator";
 
 <DetailMap
   {...selectMapInfo}

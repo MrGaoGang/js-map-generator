@@ -1,5 +1,5 @@
 {
-  "name": "map-generator",
+  "name": "js-map-generator",
   "version": "1.0.0",
   "description": "按照一定的比例随机生成地图和子地图",
   "main": "./lib/index.js",
