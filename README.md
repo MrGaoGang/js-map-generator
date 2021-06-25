@@ -100,3 +100,32 @@ import { MainMap } from "map-generator";
 }
 
 ```
+
+
+## 子地图
+
+### 使用
+
+```js
+import DetailMap from "map-generator";
+ 
+   <DetailMap
+          {...selectMapInfo}
+          showLine={true}
+          showType={'random-fill'}
+          datas={selectMapInfo.children || []}
+        />
+```
+
+### API(props)
+
+```js
+Partial<MapItemInfoType> &
+  Partial<{
+    showType: "parent" | "average" | "average-vertical" | "random-fill";
+    showLine: boolean;
+  }> & {
+    datas: ItemMapData[];
+  } & Partial<BaseProps>
+
+```
