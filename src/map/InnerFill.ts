@@ -77,6 +77,7 @@ export class InnerFiller extends Filler {
     if (
       start.x > 0 &&
       start.y > 0 &&
+      dataMap[start.x] &&
       dataMap[start.x][start.y] &&
       dataMap[start.x][start.y].value === 0
     ) {
