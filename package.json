@@ -2,7 +2,7 @@
   "name": "map-generator",
   "version": "1.0.0",
   "description": "按照一定的比例随机生成地图和子地图",
-  "main": "./lib/main.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

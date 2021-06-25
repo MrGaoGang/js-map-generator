@@ -2,13 +2,7 @@ import React, { Component } from "react";
 import { Point, MapItem } from "./Map";
 import { InnerFiller as Filler } from "./InnerFill";
 import { addAuxiliaryLine, getEventPosition } from "./utils";
-import {
-  DataMapType,
-  MapItemInfoType,
-  ItemMapData,
-  PointType,
-  BaseProps,
-} from "../types/index";
+
 const getRandomColor = function () {
   var hex = Math.floor(Math.random() * 16777216).toString(16); //生成ffffff以内16进制数
   while (hex.length < 6) {
@@ -217,7 +211,6 @@ export default class DetailMap extends Component<DetailMapProps> {
         x: Math.floor(p.x / ItemGridSize),
         y: Math.floor(p.y / ItemGridSize),
       };
-      console.log(this.getEventInWhereMap(mapPosition), "====点击的区域====");
     });
   };
   componentDidMount() {

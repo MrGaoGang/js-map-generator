@@ -1,9 +1,9 @@
-export type PointType = {
+type PointType = {
   x: number;
   y: number;
 };
 
-export type MapItemInfoType = {
+type MapItemInfoType = {
   center: PointType;
   name: string;
   id: string;
@@ -16,20 +16,20 @@ export type MapItemInfoType = {
   children?: ItemMapData[];
 };
 
-export type ItemMapData = {
+type ItemMapData = {
   name: string;
   value: number;
   color?: string;
   children?: ItemMapData[];
 };
 
-export type DataMapType = Array<{
+type DataMapType = Array<{
   value: number;
   name: string;
   color?: string;
 }>[];
 
-export type BaseProps = {
+type BaseProps = {
   mapWidth: number;
   mapHeight: number;
   gridSize: number;

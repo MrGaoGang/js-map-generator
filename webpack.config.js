@@ -4,7 +4,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "lib"),
     library: "map-generator",
-    libraryTarget: "umd",
+    filename:"index.js",
+    libraryTarget: "commonjs2",
   },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],

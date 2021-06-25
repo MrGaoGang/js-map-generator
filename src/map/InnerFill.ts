@@ -1,4 +1,3 @@
-import { PointType, DataMapType } from "../types/index";
 import { Filler } from "./Filler";
 function random(max: number) {
   return Math.round(Math.random() * max);
