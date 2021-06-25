@@ -2,6 +2,7 @@ import * as React from "react";
 import MockData from "./mock.json";
 import { MainMap, DetailMap } from "js-map-generator";
 import { Radio } from "antd";
+import './App.css';
 
 const getRandomColor = function () {
   var hex = Math.floor(Math.random() * 16777216).toString(16); //生成ffffff以内16进制数
@@ -39,7 +40,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
     super(props);
     this.state = {
       selectMapInfo: {},
-      showType: "average",
+      showType: "parent",
       showLabel: 1,
     };
   }
@@ -52,7 +53,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
   public render() {
     const { selectMapInfo, showType, showLabel } = this.state;
     return (
-      <div>
+      <div className="main-container">
         <h2>父地图</h2>
         <MainMap
           mapData={realData}
@@ -80,7 +81,9 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           {...selectMapInfo}
           showLine={true} // 暂不支持动态
           showType={showType}
-          showLabel={showLabel}
+          mapWidth = {800}
+          mapHeight = {600}
+          showLabel={false}
           datas={selectMapInfo.datas || []}
         />
       </div>

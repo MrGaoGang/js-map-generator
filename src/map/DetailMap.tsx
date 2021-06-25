@@ -49,7 +49,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
   }
 
   componentWillUpdate(newProps: DetailMapProps) {
-    if (newProps !== this.props ) {
+    if (newProps !== this.props) {
       ItemGridSize = newProps.gridSize || 10;
       this.updateMap(newProps);
       this.clearGrid();
@@ -62,20 +62,25 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
     if (props.center && props.positions) {
       const mapCenterX = Math.floor(this.numXs / 2);
       const mapCenterY = Math.floor(this.numYs / 2);
-      const xOp = mapCenterX - props.center.x;
-      const yOp = mapCenterY - props.center.y;
+      const { center, color } = props;
+      const xC = center.x - mapCenterX;
+      const yC = center.y - mapCenterY;
+
       // 更新前先清除一波
       this.clearMap();
       // 复制之前父地图到自地图中
       for (let i = 0; i < this.numXs; i++) {
         for (let j = 0; j < this.numYs; j++) {
-          if (props.positions[`${i}:${j}`]) {
-            this.dataMap[i + xOp][j + yOp].value = 0;
-            this.dataMap[i + xOp][j + yOp].color = props.color;
+          if (
+            props.positions[`${i + xC}:${j + yC}`]
+          ) {
+            this.dataMap[i][j].value = 0;
+            this.dataMap[i][j].color = color;
           }
         }
       }
     }
+
     const { showType, mapColorRandom } = props;
     if (
       showType === "average" ||
@@ -130,7 +135,17 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
     }
   }
   doRender() {
-    const { mapWidth = 1000, mapHeight = 500 } = this.props;
-    return <canvas ref={this.canvasRef} width={mapWidth} height={mapHeight} />;
+    const { mapWidth = 500, mapHeight = 250 } = this.props;
+    return (
+      <canvas
+        ref={this.canvasRef}
+        width={mapWidth}
+        height={mapHeight}
+        style={{
+          width: mapWidth + "px",
+          height: mapHeight + "px",
+        }}
+      />
+    );
   }
 }

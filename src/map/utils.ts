@@ -33,7 +33,6 @@ export function getEventPosition(ev: any) {
     x = ev.layerX;
     y = ev.layerY;
   } else if (ev.offsetX || ev.offsetX === 0) {
-    // Opera
     x = ev.offsetX;
     y = ev.offsetY;
   }

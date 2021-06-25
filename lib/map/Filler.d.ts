@@ -14,6 +14,10 @@ export declare class Filler {
         x: number;
         y: number;
     }[];
+    _getSkewContiguous(frontier: PointType): {
+        x: number;
+        y: number;
+    }[];
     changeMapItem(dataMap: DataMapType, x: number, y: number): void;
     getMapInfo(): {
         x: number[];
@@ -27,6 +31,13 @@ export declare class Filler {
         x: number;
         y: number;
     };
+    filterCanUse(dataMap: DataMapType, coors: {
+        x: number;
+        y: number;
+    }[]): {
+        x: number;
+        y: number;
+    }[];
     fill(dataMap: DataMapType, start: PointType): void;
 }
 //# sourceMappingURL=Filler.d.ts.map

@@ -54,12 +54,11 @@ export default class MainMap extends BaseMap<MainMapProps> {
           );
           // 同帮会不同的主播颜色近似
           filler.color = mapColorRandom ? getRandomColor() : ele.color || "";
-
-          filler.fill(
-            this.dataMap,
-            lastSpace ||
-              new Point(Math.floor(this.numXs / 2), Math.floor(this.numYs / 2))
+          const center = new Point(
+            Math.floor(this.numXs / 2),
+            Math.floor(this.numYs / 2)
           );
+          filler.fill(this.dataMap, lastSpace || center);
           this.labelQueue.push({
             center: filler.getCenterMap(),
             name: filler.name,
@@ -68,7 +67,7 @@ export default class MainMap extends BaseMap<MainMapProps> {
             positions: filler.frontiers,
             index: index,
             textColor: ele.textColor || "",
-            datas: ele.children || [],
+            datas: ele.children || []
           });
         });
       }
@@ -78,6 +77,16 @@ export default class MainMap extends BaseMap<MainMapProps> {
   }
   doRender() {
     const { mapWidth = 1000, mapHeight = 500 } = this.props;
-    return <canvas ref={this.canvasRef} width={mapWidth} height={mapHeight} />;
+    return (
+      <canvas
+        ref={this.canvasRef}
+        width={mapWidth}
+        height={mapHeight}
+        style={{
+          width: mapWidth + "px",
+          height: mapHeight + "px",
+        }}
+      />
+    );
   }
 }

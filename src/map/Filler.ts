@@ -23,13 +23,25 @@ export class Filler {
     this.color = "white";
     this._loopCount = 0;
   }
-
+  // 相邻的
   _getContiguous(frontier: PointType) {
     return [
       [0, 1],
       [0, -1],
       [1, 0],
       [-1, 0],
+    ].map((dir) => ({
+      x: frontier.x + dir[0],
+      y: frontier.y + dir[1],
+    }));
+  }
+  // 斜角的
+  _getSkewContiguous(frontier: PointType) {
+    return [
+      [-1, 1],
+      [1, -1],
+      [1, 1],
+      [-1, -1],
     ].map((dir) => ({
       x: frontier.x + dir[0],
       y: frontier.y + dir[1],
@@ -58,7 +70,7 @@ export class Filler {
 
   getCenterMap() {
     const info = this.getMapInfo();
-    
+
     const sumX = info.x.reduce((pre, current) => {
       return pre + current;
     }, 0);
@@ -89,6 +101,21 @@ export class Filler {
     return { x: -1, y: -1 };
   }
 
+  filterCanUse(dataMap: DataMapType, coors: { x: number; y: number }[]) {
+    return coors.filter((coor) => {
+      if (
+        coor.x < 0 ||
+        coor.y < 0 ||
+        coor.x >= this.xCount ||
+        coor.y >= this.yCount
+      )
+        return false;
+      if (dataMap[coor.x][coor.y] && dataMap[coor.x][coor.y].value !== -1)
+        return false;
+      return true;
+    });
+  }
+
   fill(dataMap: DataMapType, start: PointType) {
     // 保证循环次数最多整个网格的数量的一半
     if (this._loopCount >= (this.xCount * this.yCount * 2) / 3) {
@@ -108,23 +135,27 @@ export class Filler {
       this.changeMapItem(dataMap, start.x, start.y);
     }
 
-    const newCoors = this._getContiguous({
+    let newCoors = this._getContiguous({
       x: start.x,
       y: start.y,
     });
 
-    const canUseCoors = newCoors.filter((coor) => {
-      if (
-        coor.x < 0 ||
-        coor.y < 0 ||
-        coor.x >= this.xCount ||
-        coor.y >= this.yCount
-      )
-        return false;
-      if (dataMap[coor.x][coor.y] && dataMap[coor.x][coor.y].value !== -1)
-        return false;
-      return true;
-    });
+    let canUseCoors = this.filterCanUse(dataMap, newCoors);
+
+    if (canUseCoors.length === 0) {
+      // 极端情况处理
+      // 找斜对角
+      const skewCoors = this._getSkewContiguous(start);
+      const skewCanUse = this.filterCanUse(dataMap, skewCoors);
+      if (skewCanUse.length === 0) {
+        // 相当于一个点的前后左右，斜对面全部被占满了,则尽量从前后左右再次突围
+        this.fill(dataMap, newCoors[random(3)]);
+        return;
+      } else {
+        newCoors = skewCoors;
+        canUseCoors = skewCanUse;
+      }
+    }
 
     for (let j = 0; j < canUseCoors.length; j++) {
       const ele = canUseCoors[j];

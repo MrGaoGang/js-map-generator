@@ -65,28 +65,25 @@ export class InnerFiller extends Filler {
       this.frontierCount++;
     }
 
-    const newCoors = this._getContiguous({
+    let newCoors = this._getContiguous({
       x: start.x,
       y: start.y,
     });
 
-    const canUseCoors = newCoors.filter((coor) => {
-      if (
-        coor.x < 0 ||
-        coor.y < 0 ||
-        coor.x >= this.xCount ||
-        coor.y >= this.yCount
-      )
-        return false;
-      // 如果不存在地图上则不适用,或者已经标记过了的
-      if (
-        dataMap[coor.x][coor.y] &&
-        (dataMap[coor.x][coor.y].value === -1 ||
-          dataMap[coor.x][coor.y].value > 0)
-      )
-        return false;
-      return true;
-    });
+    let canUseCoors = this.filterCanUse(dataMap, newCoors);
+
+    if (canUseCoors.length === 0) {
+      const skewCoors = this._getSkewContiguous(start);
+      const skewCanUse = this.filterCanUse(dataMap, skewCoors);
+      if (skewCanUse.length === 0) {
+        // 相当于一个点的前后左右，斜对面全部被占满了,则尽量从前后左右再次突出
+        this.fill(dataMap, newCoors[random(3)]);
+        return;
+      } else {
+        newCoors = skewCoors;
+        canUseCoors = skewCanUse;
+      }
+    }
 
     for (let j = 0; j < canUseCoors.length; j++) {
       const ele = canUseCoors[j];

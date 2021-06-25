@@ -44,6 +44,6 @@ type BaseProps = {
     fontSize: number; // 标签字体
     fontWeight: "bold" | number;
     fontFamily: string; // 字体
-    labelDirection:'verticel' | 'horizontal' // 标签渲染方向
+    labelDirection: "verticel" | "horizontal"; // 标签渲染方向
   };
 };
