@@ -4,10 +4,17 @@
 
 ## 效果
 
-| 水平分隔 | 垂直分隔 | 随机分隔 |
-| :------- | -------: | :------: |
+水平填充子地图:
 
-| <img src="./docs/average.png"  width="400"/>| <img src="./docs/average-v.png"  width="400"/>| <img src="./docs/random.png"  width="400"/>|
+<img src="./docs/average.png"  width="400"/>
+
+垂直填充子地图:
+
+<img src="./docs/average-v.png"  width="400"/>
+
+随机填充子地图:
+
+<img src="./docs/random.png"  width="400"/>
 
 ## 使用
 
