@@ -45,6 +45,26 @@ export class InnerFiller extends Filler {
     }
   }
 
+  filterCanUse(dataMap: DataMapType, coors: { x: number; y: number }[]) {
+    return coors.filter((coor) => {
+      if (
+        coor.x < 0 ||
+        coor.y < 0 ||
+        coor.x >= this.xCount ||
+        coor.y >= this.yCount
+      )
+        return false;
+      // 如果不存在地图上则不适用,或者已经标记过了的
+      if (
+        dataMap[coor.x][coor.y] &&
+        (dataMap[coor.x][coor.y].value === -1 ||
+          dataMap[coor.x][coor.y].value > 0)
+      )
+        return false;
+      return true;
+    });
+  }
+
   fill(dataMap: DataMapType, start: PointType) {
     // 保证循环次数最多整个网格的数量的一半
     if (this._loopCount >= (this.xCount * this.yCount * 2) / 3) {
@@ -79,9 +99,6 @@ export class InnerFiller extends Filler {
         // 相当于一个点的前后左右，斜对面全部被占满了,则尽量从前后左右再次突出
         this.fill(dataMap, newCoors[random(3)]);
         return;
-      } else {
-        newCoors = skewCoors;
-        canUseCoors = skewCanUse;
       }
     }
 

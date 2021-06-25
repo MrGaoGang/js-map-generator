@@ -135,7 +135,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
     }
   }
   doRender() {
-    const { mapWidth = 500, mapHeight = 250 } = this.props;
+    const { mapWidth = 1000, mapHeight = 500 } = this.props;
     return (
       <canvas
         ref={this.canvasRef}
