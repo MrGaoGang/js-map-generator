@@ -65,7 +65,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           showLine={true}
           ref={this.mainMapRef}
           lifeCycle={{
-            mounted: (maps) => {
+            mounted: (maps:any) => {
               // 一个样例，当地图渲染完成之后，获取某个地址是否在地图之内的信息
               const pos = this.mainMapRef.current?.getEventInWhereMap({
                 x: 529,
