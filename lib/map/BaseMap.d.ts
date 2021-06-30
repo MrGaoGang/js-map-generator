@@ -16,7 +16,7 @@ export default class BaseMap<T> extends Component<T & Partial<BaseProps> & BaseP
     draw: () => void;
     drawLabel: (info: MapItemInfoType) => void;
     initDataMap: (ctx: CanvasRenderingContext2D) => void;
-    getEventInWhereMap(position: PointType): {
+    getEventInWhereMap(p: PointType): {
         id: string;
         index: number;
     };

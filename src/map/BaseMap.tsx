@@ -66,7 +66,7 @@ export default class BaseMap<T> extends Component<
 
   drawLabel = (info: MapItemInfoType) => {
     const { center, name, textColor } = info;
-    
+
     const { label } = this.props;
     if (this.ctx) {
       if (label) {
@@ -112,7 +112,12 @@ export default class BaseMap<T> extends Component<
     }
   };
 
-  getEventInWhereMap(position: PointType) {
+  getEventInWhereMap(p: PointType) {
+    // 转换为数据地图中的坐标
+    const position = {
+      x: Math.floor(p.x / ItemGridSize),
+      y: Math.floor(p.y / ItemGridSize),
+    };
     for (let i = 0; i < this.labelQueue.length; i++) {
       const ele = this.labelQueue[i];
       if (ele.positions[`${position.x}:${position.y}`]) {
@@ -129,13 +134,7 @@ export default class BaseMap<T> extends Component<
   registerListener = () => {
     this.canvasRef.current?.addEventListener("click", (event) => {
       const p = getEventPosition(event);
-      // 转换为数据地图中的坐标
-      const mapPosition = {
-        x: Math.floor(p.x / ItemGridSize),
-        y: Math.floor(p.y / ItemGridSize),
-      };
-
-      const selectMap = this.getEventInWhereMap(mapPosition);
+      const selectMap = this.getEventInWhereMap(p);
       if (selectMap.index !== -1) {
         const info = this.labelQueue[selectMap.index];
         this.props.callback && this.props.callback(info);
