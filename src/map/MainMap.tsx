@@ -32,7 +32,7 @@ export default class MainMap extends BaseMap<MainMapProps> {
 
   doDidMounted() {
     if (this.ctx) {
-      const { mapColorRandom, gridSize, showLine } = this.props;
+      const { mapColorRandom, gridSize, showLine, lifeCycle } = this.props;
       ItemGridSize = gridSize || 10;
 
       this.initDataMap(this.ctx);
@@ -42,10 +42,9 @@ export default class MainMap extends BaseMap<MainMapProps> {
       }
       if (this.props.mapData) {
         this.labelQueue = [];
-
+        lifeCycle?.beforeMounted();
+        let lastSpace: PointType | null = null;
         this.props.mapData.forEach((ele, index) => {
-          let lastSpace = null;
-
           const filler = new Filler(
             ele.value,
             ele.name,
@@ -58,7 +57,13 @@ export default class MainMap extends BaseMap<MainMapProps> {
             Math.floor(this.numXs / 2),
             Math.floor(this.numYs / 2)
           );
-          filler.fill(this.dataMap, lastSpace || center);
+          // lastSpace = filler.getSpaceMapEdge(this.dataMap);
+
+          filler.fill(
+            this.dataMap,
+            lastSpace && lastSpace.x !== -1 ? lastSpace : center
+          );
+
           this.labelQueue.push({
             center: filler.getCenterMap(),
             name: filler.name,
@@ -67,12 +72,13 @@ export default class MainMap extends BaseMap<MainMapProps> {
             positions: filler.frontiers,
             index: index,
             textColor: ele.textColor || "",
-            datas: ele.children || []
+            datas: ele.children || [],
           });
         });
       }
 
       this.draw();
+      lifeCycle?.mounted(this.labelQueue);
     }
   }
   doRender() {

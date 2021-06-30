@@ -118,6 +118,9 @@ import { MainMap } from "js-map-generator";
     fontFamily: string; // 字体
     labelDirection:'verticel' | 'horizontal' // 标签渲染方向
   };
+  lifeCycler:{
+    beforeMounted:() => void; // 开始渲染钱
+    mounted: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
   }
 }
 
@@ -179,6 +182,10 @@ import DetailMap from "js-map-generator";
     fontFamily: string; // 字体
     labelDirection:'verticel' | 'horizontal' // 标签渲染方向
   };
+   lifeCycler:{
+    beforeMounted:() => void; // 开始渲染钱
+    mounted: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
   }
+}
 
 ```

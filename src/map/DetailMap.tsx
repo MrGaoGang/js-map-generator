@@ -71,9 +71,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       // 复制之前父地图到自地图中
       for (let i = 0; i < this.numXs; i++) {
         for (let j = 0; j < this.numYs; j++) {
-          if (
-            props.positions[`${i + xC}:${j + yC}`]
-          ) {
+          if (props.positions[`${i + xC}:${j + yC}`]) {
             this.dataMap[i][j].value = 0;
             this.dataMap[i][j].color = color;
           }
@@ -81,13 +79,14 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       }
     }
 
-    const { showType, mapColorRandom } = props;
+    const { showType, mapColorRandom, lifeCycle } = props;
     if (
       showType === "average" ||
       showType === "random-fill" ||
       showType === "average-vertical"
     ) {
       this.labelQueue = [];
+      lifeCycle?.beforeMounted();
       // 开始填充
       (props.datas || []).forEach((ele, index) => {
         const filler = new Filler(ele.value, ele.name, this.numXs, this.numYs);
@@ -120,6 +119,8 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
           datas: ele.children || [],
         });
       });
+
+      lifeCycle?.mounted(this.labelQueue);
     }
   }
 

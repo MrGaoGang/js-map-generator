@@ -148,11 +148,11 @@ export class Filler {
       // 找斜对角
       const skewCoors = this._getSkewContiguous(start);
       const skewCanUse = this.filterCanUse(dataMap, skewCoors);
-      if (skewCanUse.length === 0) {
+      if (skewCanUse.length === 0 && this.frontierCount <= 1) {
         // 相当于一个点的前后左右，斜对面全部被占满了,则尽量从前后左右再次突围
         this.fill(dataMap, newCoors[random(3)]);
         return;
-      } else {
+      } else  {
         newCoors = skewCoors;
         canUseCoors = skewCanUse;
       }

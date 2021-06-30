@@ -46,4 +46,8 @@ type BaseProps = {
     fontFamily: string; // 字体
     labelDirection: "verticel" | "horizontal"; // 标签渲染方向
   };
+  lifeCycle?: {
+    beforeMounted:() => void; // 开始渲染钱
+    mounted: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
+  };
 };

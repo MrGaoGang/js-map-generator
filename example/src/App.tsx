@@ -2,7 +2,7 @@ import * as React from "react";
 import MockData from "./mock.json";
 import { MainMap, DetailMap } from "js-map-generator";
 import { Radio } from "antd";
-import './App.css';
+import "./App.css";
 
 const getRandomColor = function () {
   var hex = Math.floor(Math.random() * 16777216).toString(16); //生成ffffff以内16进制数
@@ -25,7 +25,8 @@ const realData = MockData.map((ele) => {
         };
       }),
   };
-});
+}).sort((a, b) => b.value - a.value);
+console.log(realData);
 
 export interface IAppProps {}
 
@@ -76,15 +77,14 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           <Radio value={"random-fill"}>random-fill</Radio>
         </Radio.Group>
 
-
         <DetailMap
           {...selectMapInfo}
           showLine={true} // 暂不支持动态
           showType={showType}
-          mapWidth = {800}
-          mapHeight = {600}
+          mapWidth={800}
+          mapHeight={600}
           showLabel={false}
-          datas={selectMapInfo.datas || []}
+          datas={(selectMapInfo.datas || []).sort((a:any, b:any) => b.value - a.value)}
         />
       </div>
     );
