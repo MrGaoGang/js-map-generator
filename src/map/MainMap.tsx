@@ -42,7 +42,9 @@ export default class MainMap extends BaseMap<MainMapProps> {
       }
       if (this.props.mapData) {
         this.labelQueue = [];
-        lifeCycle?.beforeMounted();
+        setTimeout(() => {
+          lifeCycle && lifeCycle.beforeMounted && lifeCycle.beforeMounted();
+        });
         let lastSpace: PointType | null = null;
         this.props.mapData.forEach((ele, index) => {
           const filler = new Filler(
@@ -78,7 +80,9 @@ export default class MainMap extends BaseMap<MainMapProps> {
       }
 
       this.draw();
-      lifeCycle?.mounted(this.labelQueue);
+      setTimeout(() => {
+        lifeCycle && lifeCycle.mounted && lifeCycle.mounted(this.labelQueue);
+      });
     }
   }
   doRender() {

@@ -31,7 +31,7 @@ type DataMapType = Array<{
   color?: string;
 }>[];
 
-type BaseProps = {
+type BaseProps = {  
   mapWidth: number; // 地图宽度
   mapHeight: number; // 地图高度
   gridSize: number; // 网格宽高
@@ -47,7 +47,7 @@ type BaseProps = {
     labelDirection: "verticel" | "horizontal"; // 标签渲染方向
   };
   lifeCycle?: {
-    beforeMounted:() => void; // 开始渲染钱
-    mounted: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
+    beforeMounted?:() => void; // 开始渲染钱
+    mounted?: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
   };
 };

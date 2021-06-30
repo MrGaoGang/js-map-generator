@@ -117,7 +117,7 @@ export default class BaseMap<T> extends Component<
     const position = {
       x: Math.floor(p.x / ItemGridSize),
       y: Math.floor(p.y / ItemGridSize),
-    };
+    };    
     for (let i = 0; i < this.labelQueue.length; i++) {
       const ele = this.labelQueue[i];
       if (ele.positions[`${position.x}:${position.y}`]) {

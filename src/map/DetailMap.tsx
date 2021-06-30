@@ -86,7 +86,9 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       showType === "average-vertical"
     ) {
       this.labelQueue = [];
-      lifeCycle?.beforeMounted();
+      setTimeout(() => {
+        lifeCycle && lifeCycle.beforeMounted && lifeCycle.beforeMounted();
+      });
       // 开始填充
       (props.datas || []).forEach((ele, index) => {
         const filler = new Filler(ele.value, ele.name, this.numXs, this.numYs);
@@ -119,8 +121,9 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
           datas: ele.children || [],
         });
       });
-
-      lifeCycle?.mounted(this.labelQueue);
+      setTimeout(() => {
+        lifeCycle && lifeCycle.mounted &&  lifeCycle.mounted(this.labelQueue);
+      });
     }
   }
 

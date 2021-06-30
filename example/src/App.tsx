@@ -37,6 +37,7 @@ type MainMapState = {
 };
 
 export default class App extends React.Component<IAppProps, MainMapState> {
+  mainMapRef: React.RefObject<MainMap>;
   constructor(props: IAppProps) {
     super(props);
     this.state = {
@@ -44,6 +45,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
       showType: "parent",
       showLabel: 1,
     };
+    this.mainMapRef = React.createRef();
   }
 
   onChange = (e: any) => {
@@ -51,6 +53,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
       showType: e.target.value,
     });
   };
+
   public render() {
     const { selectMapInfo, showType, showLabel } = this.state;
     return (
@@ -60,6 +63,19 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           mapData={realData}
           showLabel={true}
           showLine={true}
+          ref={this.mainMapRef}
+          lifeCycle={{
+            mounted: (maps) => {
+              // 一个样例，当地图渲染完成之后，获取某个地址是否在地图之内的信息
+              const pos = this.mainMapRef.current?.getEventInWhereMap({
+                x: 529,
+                y: 288,
+              });
+              if (pos && pos.index !== -1) {
+                console.log(maps[pos?.index]);
+              }
+            },
+          }}
           callback={(info: any) => {
             this.setState({
               selectMapInfo: info,
@@ -84,7 +100,9 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           mapWidth={800}
           mapHeight={600}
           showLabel={false}
-          datas={(selectMapInfo.datas || []).sort((a:any, b:any) => b.value - a.value)}
+          datas={(selectMapInfo.datas || []).sort(
+            (a: any, b: any) => b.value - a.value
+          )}
         />
       </div>
     );
