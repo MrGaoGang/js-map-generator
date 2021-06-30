@@ -1,10 +1,11 @@
 {
   "name": "js-map-generator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "按照一定的比例随机生成地图和子地图",
   "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
   "scripts": {
-    "build": "npx webpack"
+    "build": "rm -rf ./lib  && npx webpack"
   },
   "repository": {
     "type": "git",

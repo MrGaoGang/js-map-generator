@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import BaseMap from "./BaseMap";
 export declare type DetailMapProps = Partial<MapItemInfoType> & Partial<{
     showType: "parent" | "average" | "average-vertical" | "random-fill";
