@@ -72,6 +72,7 @@ import { MainMap } from "js-map-generator";
     "name": "区域2",
     "color": "rgb(30,144,255)",
     "value": 180,
+    "direction":3, // 0,1,2,3,4,5,6,7 分包代表上，右上，右，右下，下，左下，左，左上
     "children": [
       {
         "name": "子区域1-1",

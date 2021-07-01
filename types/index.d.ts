@@ -17,21 +17,25 @@ type MapItemInfoType = {
   datas?: ItemMapData[]; // 子地图的数据
 };
 
+// 传入给地图组件的数据
 type ItemMapData = {
   name: string; // 名称
   value: number; // 值
   color?: string; // 颜色
   textColor?: string; // 文本颜色
+  direction?: number;
+  id?: string;
   children?: ItemMapData[];
 };
 
+// 数据地图的类型
 type DataMapType = Array<{
   value: number;
   name: string;
   color?: string;
 }>[];
 
-type BaseProps = {  
+type BaseProps = {
   mapWidth: number; // 地图宽度
   mapHeight: number; // 地图高度
   gridSize: number; // 网格宽高
@@ -47,7 +51,7 @@ type BaseProps = {
     labelDirection: "verticel" | "horizontal"; // 标签渲染方向
   };
   lifeCycle?: {
-    beforeMounted?:() => void; // 开始渲染钱
-    mounted?: (maps:MapItemInfoType[]) => void; // 地图已经渲染完成
+    beforeMounted?: () => void; // 开始渲染钱
+    mounted?: (maps: MapItemInfoType[]) => void; // 地图已经渲染完成
   };
 };

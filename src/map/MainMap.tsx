@@ -2,7 +2,7 @@ import React from "react";
 import { Point } from "./Map";
 import { Filler } from "./Filler";
 import "./polyfill";
-import { addAuxiliaryLine, getRandomColor } from "./utils";
+import { addAuxiliaryLine, getRandomColor, getSpaceCenter } from "./utils";
 
 import BaseMap from "./BaseMap";
 
@@ -45,8 +45,9 @@ export default class MainMap extends BaseMap<MainMapProps> {
         setTimeout(() => {
           lifeCycle && lifeCycle.beforeMounted && lifeCycle.beforeMounted();
         });
-        let lastSpace: PointType | null = null;
         this.props.mapData.forEach((ele, index) => {
+          let lastSpace: PointType | null = null;
+
           const filler = new Filler(
             ele.value,
             ele.name,
@@ -59,8 +60,10 @@ export default class MainMap extends BaseMap<MainMapProps> {
             Math.floor(this.numXs / 2),
             Math.floor(this.numYs / 2)
           );
-          // lastSpace = filler.getSpaceMapEdge(this.dataMap);
-
+          if (ele.direction !== undefined) { // 针对有方向的
+            lastSpace = getSpaceCenter(this.dataMap, ele.direction);            
+            lastSpace = lastSpace.x !== -1 ? lastSpace : center;
+          }
           filler.fill(
             this.dataMap,
             lastSpace && lastSpace.x !== -1 ? lastSpace : center
@@ -69,7 +72,7 @@ export default class MainMap extends BaseMap<MainMapProps> {
           this.labelQueue.push({
             center: filler.getCenterMap(),
             name: filler.name,
-            id: filler.name, // 后面换成真实的id
+            id: ele.id || ele.name, // 后面换成真实的id
             color: filler.color,
             positions: filler.frontiers,
             index: index,

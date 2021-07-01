@@ -113,7 +113,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
         this.labelQueue.push({
           center: filler.getCenterMap(),
           name: filler.name,
-          id: filler.name, // 后面换成真实的id
+          id: ele.id || ele.name, // 后面换成真实的id
           color: filler.color,
           positions: filler.frontiers,
           index: index,

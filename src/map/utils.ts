@@ -47,3 +47,121 @@ export const getRandomColor = function () {
   }
   return "#" + hex; //返回‘#’开头16进制颜色
 };
+
+enum SubMapDirection {
+  T, // 上
+  TXR, //右上角
+  R, //右
+  RXB, // 右下角
+  B, // 下
+  BXL, // 左下角
+  L, //左
+  LXT, // 左上角
+}
+
+/**
+ * 获取某个方向的空余
+ * @param dataMap
+ * @param direction
+ */
+export function getSpaceCenter(
+  dataMap: DataMapType,
+  direction: SubMapDirection
+): { x: number; y: number } {
+  let xC = dataMap.length;
+  let yC = dataMap[0].length;
+
+  let xH = Math.floor(xC / 2);
+  let yH = Math.floor(yC / 2);
+
+  const result = {
+    x: -1,
+    y: -1,
+  };
+
+  function isEmpty(ele: ItemMapData) {
+    return ele.value === -1;
+  }
+
+  // 上或者下
+  if (direction === SubMapDirection.T || direction === SubMapDirection.B) {
+    for (
+      let y = yH;
+      direction === SubMapDirection.T ? y >= 0 : y < yC;
+      direction === SubMapDirection.T ? y-- : y++
+    ) {
+      const ele = dataMap[xH][y];
+      if (isEmpty(ele)) {
+        return {
+          x: xH,
+          y,
+        };
+      }
+    }
+
+    return result;
+  }
+  // 左或者右边
+  if (direction === SubMapDirection.R || direction === SubMapDirection.L) {
+    for (
+      let x = 0;
+      direction === SubMapDirection.R ? x < xC : x >= 0;
+      direction === SubMapDirection.R ? x++ : x--
+    ) {
+      const ele = dataMap[x][yH];
+      if (isEmpty(ele)) {
+        return {
+          x,
+          y: yH,
+        };
+      }
+    }
+
+    return result;
+  }
+
+  const minCount = Math.min(yH, xH);
+  for (let i = 0; i < minCount; i++) {
+    // 右下
+    if (direction === SubMapDirection.RXB) {
+      const ele = dataMap[xH + i][yH + i];
+      if (isEmpty(ele)) {
+        return {
+          x: xH + i,
+          y: yH + i,
+        };
+      }
+    } else if (direction === SubMapDirection.TXR) {
+      // 右上
+      const ele = dataMap[xH + i][yH - i];
+      if (isEmpty(ele)) {
+        return {
+          x: xH + i,
+          y: yH - i,
+        };
+      }
+    } else if (direction === SubMapDirection.BXL) {
+      // 右上
+      const ele = dataMap[xH - i][yH + i];
+      if (isEmpty(ele)) {
+        return {
+          x: xH - i,
+          y: yH + i,
+        };
+      }
+    } else if (direction === SubMapDirection.LXT) {
+      // 右上
+      const ele = dataMap[xH - i][yH - i];
+      if (isEmpty(ele)) {
+        return {
+          x: xH - i,
+          y: yH - i,
+        };
+      }
+    } else {
+      break;
+    }
+  }
+
+  return result;
+}
