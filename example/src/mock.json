@@ -2,7 +2,7 @@
   {
     "name": "区域1",
     "color": "rgb(0,139,139)",
-    "value": 1800,
+    "value": 240,
     "children": [
       {
         "name": "子地区1",
@@ -18,6 +18,98 @@
       },
       {
         "name": "子地区4",
+        "value": 60
+      }
+    ]
+  },
+  {
+    "name": "区域2",
+    "color": "rgb(30,144,255)",
+    "direction":3,
+    "value": 180,
+    "children": [
+      {
+        "name": "子地区1-1",
+        "value": 40
+      },
+      {
+        "name": "子地区2-1",
+        "value": 50
+      },
+      {
+        "name": "子地区3-1",
+        "value": 30
+      },
+      {
+        "name": "子地区4-1",
+        "value": 60
+      }
+    ]
+  },
+  {
+    "name": "区域3",
+    "color": "red",
+    "value": 180,
+    "children": [
+      {
+        "name": "子地区1-1",
+        "value": 40
+      },
+      {
+        "name": "子地区2-1",
+        "value": 50
+      },
+      {
+        "name": "子地区3-1",
+        "value": 30
+      },
+      {
+        "name": "子地区4-1",
+        "value": 60
+      }
+    ]
+  },
+  {
+    "name": "区域4",
+    "color": "pink",
+    "value": 180,
+    "children": [
+      {
+        "name": "子地区1-1",
+        "value": 40
+      },
+      {
+        "name": "子地区2-1",
+        "value": 50
+      },
+      {
+        "name": "子地区3-1",
+        "value": 30
+      },
+      {
+        "name": "子地区4-1",
+        "value": 60
+      }
+    ]
+  },{
+    "name": "区域5",
+    "color": "yellow",
+    "value": 180,
+    "children": [
+      {
+        "name": "子地区1-1",
+        "value": 40
+      },
+      {
+        "name": "子地区2-1",
+        "value": 50
+      },
+      {
+        "name": "子地区3-1",
+        "value": 30
+      },
+      {
+        "name": "子地区4-1",
         "value": 60
       }
     ]
