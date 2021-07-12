@@ -7,7 +7,7 @@ module.exports = {
     filename:"index.js",
     libraryTarget: "commonjs2",
   },
-  // mode:'development',
+  mode:'development',
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
   },

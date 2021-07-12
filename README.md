@@ -48,7 +48,7 @@ import { MainMap } from "js-map-generator";
   {
     "name": "区域1",
     "color": "rgb(0,139,139)",
-    "value": 240,
+    "value": 240, // 占据的格子数量
     "children": [
       {
         "name": "子区域1",
@@ -105,7 +105,7 @@ import { MainMap } from "js-map-generator";
  // 地图相关
   mapWidth: number; // 地图宽度
   mapHeight: number; // 地图高度
-  gridSize: number; // 网格宽高
+  gridSize: number; // 网格宽高，不建议太小
   mapColorRandom?: boolean; // 是否随机生成地图颜色
   showLine?: boolean; // 是否显示辅助线;暂不支持动态
 

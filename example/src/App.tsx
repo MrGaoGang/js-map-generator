@@ -63,6 +63,9 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           mapData={realData}
           showLabel={true}
           showLine={true}
+          mapWidth={document.body.clientWidth}
+          mapHeight={document.body.clientHeight}
+          gridSize={10}
           ref={this.mainMapRef}
           lifeCycle={{
             mounted: (maps:any) => {

@@ -165,3 +165,10 @@ export function getSpaceCenter(
 
   return result;
 }
+
+export function trampoline(f: any) {
+  while (f && f instanceof Function) {
+    f = f(); // 返回一个函数，然后执行该函数
+  }
+  return f;
+}

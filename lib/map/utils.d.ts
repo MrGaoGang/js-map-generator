@@ -23,5 +23,6 @@ export declare function getSpaceCenter(dataMap: DataMapType, direction: SubMapDi
     x: number;
     y: number;
 };
+export declare function trampoline(f: any): any;
 export {};
 //# sourceMappingURL=utils.d.ts.map

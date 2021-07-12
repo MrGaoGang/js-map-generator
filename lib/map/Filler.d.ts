@@ -8,7 +8,6 @@ export declare class Filler {
         [prop: string]: boolean;
     };
     color: string;
-    _loopCount: number;
     constructor(value: number, name: string, xCount: number, yCount: number);
     _getContiguous(frontier: PointType): {
         x: number;
