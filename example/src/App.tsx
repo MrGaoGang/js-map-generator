@@ -34,6 +34,7 @@ type MainMapState = {
   selectMapInfo: any;
   showType: string;
   showLabel: number;
+  showMap: boolean
 };
 
 export default class App extends React.Component<IAppProps, MainMapState> {
@@ -44,6 +45,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
       selectMapInfo: {},
       showType: "parent",
       showLabel: 1,
+      showMap:false
     };
     this.mainMapRef = React.createRef();
   }
@@ -55,7 +57,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
   };
 
   public render() {
-    const { selectMapInfo, showType, showLabel } = this.state;
+    const { selectMapInfo, showType, showLabel,showMap } = this.state;
     return (
       <div className="main-container">
         <h2>父地图</h2>
@@ -80,6 +82,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           callback={(info: any) => {
             this.setState({
               selectMapInfo: info,
+              showMap:true
             });
           }}
         />
@@ -94,7 +97,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           <Radio value={"random-fill"}>random-fill</Radio>
         </Radio.Group>
 
-        <DetailMap
+       { showMap &&  <DetailMap
           {...selectMapInfo}
           showLine={true} // 暂不支持动态
           showType={showType}
@@ -104,7 +107,7 @@ export default class App extends React.Component<IAppProps, MainMapState> {
           datas={(selectMapInfo.datas || []).sort(
             (a: any, b: any) => b.value - a.value
           )}
-        />
+        />}
       </div>
     );
   }

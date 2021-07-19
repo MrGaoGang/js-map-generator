@@ -11,6 +11,7 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
     clearGrid(): void;
     clearMap(): void;
     componentWillUpdate(newProps: DetailMapProps): void;
+    renderGrid(newProps: DetailMapProps): void;
     updateMap(props: DetailMapProps): void;
     doDidMounted(): void;
     doRender(): JSX.Element;

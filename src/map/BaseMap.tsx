@@ -45,6 +45,7 @@ export default class BaseMap<T> extends Component<
   }
 
   draw = () => {
+
     // 绘制网格
     for (let x = 0; x < this.numXs; x++) {
       for (let y = 0; y < this.numYs; y++) {

@@ -49,12 +49,17 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
   }
 
   componentWillUpdate(newProps: DetailMapProps) {
+    
     if (newProps !== this.props) {
-      ItemGridSize = newProps.gridSize || 10;
-      this.updateMap(newProps);
-      this.clearGrid();
-      this.draw();
+      this.renderGrid(newProps);
     }
+  }
+
+  renderGrid(newProps:DetailMapProps){
+    ItemGridSize = newProps.gridSize || 10;
+    this.updateMap(newProps);
+    this.clearGrid();
+    this.draw();
   }
 
   updateMap(props: DetailMapProps) {
@@ -132,6 +137,9 @@ export default class DetailMap extends BaseMap<DetailMapProps> {
       const { showLine, gridSize = 10 } = this.props;
       ItemGridSize = gridSize;
       this.initDataMap(this.ctx);
+      if(Object.keys(this.props).length>0){
+        this.renderGrid(this.props);
+      }
       this.registerListener();
       if (showLine) {
         addAuxiliaryLine(this.ctx, ItemGridSize);
